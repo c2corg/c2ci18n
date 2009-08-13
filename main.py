@@ -375,16 +375,3 @@ if __name__ == "__main__":
 
 
 ##############
-"""
-TODO
-- pouvoir exporter les .po
-- ecuperer les strings non traduites dnas un langage...
-- pouvoir supprimer une entree, revenir aux versions précédentes... etc... --> garde rles logs apres suppression
-cron de mails, ou alors feed rss...
-echappements de strings
-gérer le multiligne http://www.gnu.org/software/hello/manual/gettext/PO-Files.html
-echappement de caractere et verifier que les params ok..;
-pouvoir acceder aux vielles version
-admin pour add et delete
-pouvoir revenir a une version precedente
-"""
