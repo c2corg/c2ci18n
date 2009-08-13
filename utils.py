@@ -106,6 +106,8 @@ def get_actual_translation(translation, lang, warning=False):
   """
   if warning:
     error_msg = '# [WARNING] ' + lang + ' translation used'
+  elif getattr(translation, lang+'_state') != 'translated':
+    error_msg = '# [WARNING] ' + getattr(translation, lang+'_state')
   else:
     error_msg = ''
 
