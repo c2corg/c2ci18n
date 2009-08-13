@@ -3,6 +3,9 @@ import code
 import getpass
 import sys
 
+print 'Correct paths and then remove me'
+sys.exit()
+
 sys.path.append("/home/popeye/google_appengine")
 sys.path.append("/home/popeye/google_appengine/lib/yaml/lib")
 sys.path.append("/home/popeye/c2ci18n")
