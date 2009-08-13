@@ -1,0 +1,44 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+
+<%def name="body()">
+
+% if len(translations) != 0:
+
+<center>
+<table id="translation_list">
+  <tr><th>msgid</th><th>fr</th><th>it</th><th>de</th><th>en</th><th>es</th><th>ca</th><th>eu</th></tr>
+% for translation in translations:
+  <tr>
+    <td class="normal"><a href="/translations/edit/${translation['id']}">${translation['msgid']}</a></td>
+    <td class="${translation['fr_state']}">${translation['fr_state']}</td>
+    <td class="${translation['it_state']}">${translation['it_state']}</td>
+    <td class="${translation['de_state']}">${translation['de_state']}</td>
+    <td class="${translation['en_state']}">${translation['en_state']}</td>
+    <td class="${translation['es_state']}">${translation['es_state']}</td>
+    <td class="${translation['ca_state']}">${translation['ca_state']}</td>
+    <td class="${translation['eu_state']}">${translation['eu_state']}</td>
+  </tr>
+% endfor
+</table>
+
+<p class="prevnext">
+% if prevuri:
+  <a href="${prevuri}">Previous page</a>
+% endif
+% if prevuri and nexturi:
+  - 
+%endif
+% if nexturi:
+  <a href="${nexturi}">Next page</a> 
+% endif
+</p>
+</center>
+
+% else:
+
+Empty!!!!!!!
+
+% endif
+
+</%def>

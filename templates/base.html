@@ -1,0 +1,160 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>c2c - i18n</title>
+    <link href="/css/main.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+    <style type="text/css" media="screen">
+    /* NOT TESTED!! */
+    body {
+    behavior: url(csshover.htc); /* call hover behaviour file */
+    font-size: 100%; /* enable IE to resize em fonts */
+    } 
+    .menu ul li {
+    float: left; /* cure IE5.x "whitespace in lists" problem */
+    width: 100%;
+    }
+    .menu ul li a {
+    height: 1%; /* make links honour display: block; properly */
+    } 
+
+    #menu a, #menu h2 {
+    font: bold 0.7em/1.4em arial, helvetica, sans-serif; 
+    /* if required use em's for IE as it won't resize pixels */
+    } 
+    </style>
+    <![endif]-->
+    <link rel="alternate" type="application/rss+xml" title="Rss" href="/feed.rss" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.3/prototype.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.2/scriptaculous.js"></script>
+  </head>
+  <body>
+  <span id="indicator" style="display: none">loading...</span>
+  <span id="ajax_feedback_failure" style="display: none"></span>
+  <span id="ajax_feedback_success" style="display: none">Changes saved</span>
+  <div id="header">
+    <div id="logo">
+      <img src="/images/logo.png" alt="Translate camptocamp.org" />
+    </div>
+    <div id="shortcuts">
+      <a href="/">Home</a> |
+      <a href="/translations/list">List</a> |
+% if is_admin:
+      <a href="/translations/add">Add a translation item</a> |
+% endif
+      <a href="/help">Help</a> |
+      Po files:
+      <a href="/po/messages.fr.po">fr</a>
+      <a href="/po/messages.it.po">it</a>
+      <a href="/po/messages.de.po">de</a>
+      <a href="/po/messages.en.po">en</a>
+      <a href="/po/messages.es.po">es</a>
+      <a href="/po/messages.ca.po">ca</a>
+      <a href="/po/messages.eu.po">eu</a>
+    </div>
+  </div>
+
+  <div id="left">
+    <ul id="left_menus">
+      <li class="menu">
+        <div class="menu_title">Search a msgid</div>
+        <div class="menu_items">
+          <center>
+          <span class="smallgrey">search msgids starting by:</span>
+          <form action="" method="get">
+            <input type="text" name="msgid_autocomplete" id="msgid_autocomplete" />
+            <div id="msgids_props" class="autocomplete"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+            new Ajax.Autocompleter("msgid_autocomplete", "msgids_props", "/translations/search",
+                                   { paramName: 'search_text', method: 'get',
+                                     minChars: '2', indicator: 'indicator',
+                                     updateElement: function(selectedItem) { window.location = "/translations/edit/"+selectedItem.id; }
+                                   });
+            //]]>
+            </script>
+          </form>
+          </center>
+        </div>
+      </li>
+      <li class="menu">
+        <div class="menu_title">Translate</div>
+        <ul class="menu_items">
+          <li class="menu_item">
+            <a href="" title="All languages">All languages</a>
+            <ul class="submenu_items">
+              <li class="submenu_item"><a href="/translations/edit/0" title="Browse all strings">All strings</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/translated"
+                  title="Browse strings for which at least one language has been translated">Partially translated strings</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/needs_review"
+                  title="Browse strings for which at least one language needs review">Strings that need review</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/needs_update"
+                  title="Browse strings for which at least one language needs update">Strings that need update</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/needs_translation"
+                  title="Browse strings for which at least one language needs translation">Strings that need translation</a></li>
+            </ul>
+          </li>
+          <%
+            langs = [ 'fr', 'it', 'de', 'en', 'es', 'ca', 'eu' ]
+            langs_long = { 'fr': 'french','it': 'italian','de': 'german', 'en': 'english', 'es': 'spanish', 'ca': 'catalan', 'eu': 'basque' }
+          %>
+          % for lang in langs:
+          <li class="menu_item">
+            <a href="" onclick="return false;" title="Browse strings in ${langs_long[lang]}">${langs_long[lang].capitalize()}</a>
+            <ul class="submenu_items">
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/translated"
+                  title="Browse all strings that are already translated in ${langs_long[lang]}">Already translated strings</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}"
+                  title="Browse all strings that need action in ${langs_long[lang]}">Strings that need action</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/needs_review"
+                  title="Browse all strings that need review in ${langs_long[lang]}">Strings that need review</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/needs_update"
+                  title="Browse all strings that need update in ${langs_long[lang]}">Strings that need update</a></li>
+              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/needs_translation"
+                  title="Browse all strings that need translation in ${langs_long[lang]}">Strings that need translation</a></li>
+            </ul>
+          </li>
+          % endfor
+          <li class="menu_item"><a href="/recentchanges" title="See recent changes">Recent changes</a>
+            <ul class="submenu_items">
+              <li class="submenu_item"><a href="/recentchanges" title="All recent changes">All languages</a>
+              % for lang in langs:
+              <li class="submenu_item"><a href="/recentchanges/${lang}" title="Recent changes for ${langs_long[lang]}">${langs_long[lang].capitalize()}</a><li>
+              % endfor
+            </ul>
+          </li>
+          <li class="menu_item"><a href="/feed.rss" title="Latest changes rss feed">Latest changes feed &nbsp;<img src="/images/rss.gif" /></a></li>
+        </ul>
+      </li>
+      <li class="menu">
+        <div class="menu_title">Quick links</div>
+        <ul class="menu_items">
+          <li class="menu_item"><script type="text/javascript">
+          //<![CDATA[
+          document.write('<a href="mailto:dev@');document.write('camptocam');document.write('p.org">Contact us</a>');
+          //]]></script></li>
+          <li class="menu_item"><a href="http://www.camptocamp.org" title="camptocamp.org">Camptocamp.org</a></li>
+          <li class="menu_item"><a href="http://dev.camptocamp.org" title="camptocamp.org developers">Developers site</a></li>
+          <li class="menu_item"><a href="http://dev.camptocamp.org/trac/c2corg/browser/trunk/camptocamp.org/apps/frontend/i18n"
+          title="browse i18n part of camptocamp.org repository">Repository /i18n/</a></li>
+          <li class="menu_item"><a href="http://www.google.com/language_tools" title="Google language tools">Google language tools</a></li>
+        </ul>
+      </li>
+    </ul>
+    <br /><br />
+    <center><img src="http://code.google.com/appengine/images/appengine-noborder-120x30.gif" alt="Powered by Google App Engine" /></center>
+  </div>
+
+  <div id="main">
+  ${self.body()}
+  </div>
+
+  <div id="top-options">
+    <span class="login" >${greeting }</span>
+  </div>
+
+  </body>
+</html> 

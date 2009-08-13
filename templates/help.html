@@ -1,0 +1,36 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+
+<%def name="body()">
+<h3>Translation states</h3>
+<p>
+Translation items can be in 4 states:
+<li><b>translated:</b> everything is fine</li>
+<li><b>needs update:</b> the translation should be updated because the meaning of the msgid evolved</li>
+<li><b>needs review:</b> the translation might be incorrect and shoudl be reviewed</li>
+<li><b>needs translation:</b> the item is untranslated
+</p>
+<h3>Translation comments</h3>
+<p>
+For each translation, you have a general comment (generally to explain what the msgid reflects), and
+one comment per language, for comments specific to this language
+</p>
+<h3>Which translation is being actually used?</h3>
+<p>
+If a string has a translation (aka not 'needs translation'), this version is used.
+Else, it tries to get the best available translation for other languages.
+For example, if the cataln version is not available, it wil try to use the spanish one, then the english one, and so on
+</p>
+<h3>Where can I find the msgid for a string?</h3>
+<p>
+Have a look at the <a href="http://dev.camptocamp.org/trac/c2corg/browser/trunk/camptocamp.org/apps/frontend/i18n">i18n directory</a>
+from the subversion repository
+</p>
+<h3>How can I add new items?</h3>
+<p>
+Only moderators can add new translation items
+</p>
+<p>
+<center>To be completed</center>
+</p>
+</%def>

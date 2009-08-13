@@ -1,0 +1,87 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+<%def name="body()">
+<%
+  import cgi
+%>
+<form id="edit_form" action="" method="post">
+  <center>msgid: <b>${translation['msgid']}</b></center>
+  % if status == '1':
+  <script type="text/javascript">
+  Element.show('ajax_feedback_success'); new Effect.Fade('ajax_feedback_success', { duration: 3.0 });
+  </script>
+  % elif status == '-1':
+  <script type="text/javascript">
+  $('ajax_feedback_failure').replace('<span id="ajax_feedback_failure" style="display: none">No changes to save (or perhaps an error?)</span>');
+  Element.show('ajax_feedback_failure'); new Effect.Fade('ajax_feedback_failure', { duration: 3.0 });
+  </script>
+  % endif
+<p><center>
+<input type="submit" id="save_link" href="" value="Save your changes" onclick="save_ok=false;" />
+<a id="cancel_link" href="/translations/edit/${translation['id']}${url_suffix}"
+         title="Discard your changes" onclick="save_state(false); return true;"><input type="button" value="Discard changes" /></a>
+% if not next_to_edit is None:
+<a href="/translations/edit/${next_to_edit}${url_suffix}" title="Go to the next untranslated string"><input type="button" value="Next item" /></a>
+% endif
+</center>
+<script type="text/javascript">var translation_id = ${translation['id']}</script>
+<script type="text/javascript" src="/js/edit.js"></script>
+<br />
+<hr />
+<center></p>
+  <table>
+    <tr>
+      <td colspan="3">
+        <label for="comment">general comment:</label><br />
+        <textarea name="comment" class="normal" id="comment">${cgi.escape(translation['comment'])}</textarea>
+      </td>
+    </tr>
+    <%
+      langs = [ 'fr', 'it', 'de', 'en', 'es', 'ca', 'eu' ]
+      langs_long = { 'fr': 'french','it': 'italian','de': 'german', 'en': 'english', 'es': 'spanish', 'ca': 'catalan', 'eu': 'basque' }
+    %>
+  % for lang in langs:
+    <%
+      import utils
+      import cgi
+    %>
+    <tr>
+      <td>
+        <label for="${lang}">${langs_long[lang]} translation:</label><br />
+        <textarea name="${lang}" id="${lang}" class="${translation[lang + '_state']}">${cgi.escape(translation[lang])}</textarea>
+      </td>
+      <td>
+        <label for="${lang}_comment">${langs_long[lang]} translation comment:</label><br />
+        <textarea name="${lang}_comment" id="${lang}_comment" class="normal">${translation[lang+'_comment']}</textarea></td>
+      <td>
+        <input type="radio" name="${lang}_state" id="${lang}_state_translated" value="translated"${utils.check_value(translation, lang, 'translated')} />
+        <label for="${lang}_state_translated">Translated</label><br />
+        <input type="radio" name="${lang}_state" id="${lang}_state_needs_review" value="needs_review"${utils.check_value(translation, lang, 'needs_review')} />
+        <label for="${lang}_state_needs_review">Needs review</label><br />
+        <input type="radio" name="${lang}_state" id="${lang}_state_needs_update" value="needs_update"${utils.check_value(translation, lang, 'needs_update')} />
+        <label for="${lang}_state_needs_update">Needs update</label><br />
+        <input type="radio" name="${lang}_state" id="${lang}_state_needs_translation" value="needs_translation"${utils.check_value(translation, lang, 'needs_translation')} />
+        <label for="${lang}_state_needs_translation">Needs translation</label>
+      </td>
+    </tr>
+  % endfor
+  </table>
+</form>
+<p><center>
+<input type="submit" id="save_link" href="" value="Save your changes" accesskey="S" onclick="save_ok=false;" />
+<a id="cancel_link" href="/translations/edit/${translation['id']}${url_suffix}" accesskey="D"
+         title="Discard your changes" onclick="save_state(false); return true;"><input type="button" value="Discard changes" /></a>
+% if not next_to_edit is None:
+<a href="/translations/edit/${next_to_edit}${url_suffix}" accesskey="N" title="Go to the next untranslated string">
+<input type="button" value="Next item" /></a>
+% endif
+</center>
+<script type="text/javascript">var translation_id = ${translation['id']}</script>
+<script type="text/javascript" src="/js/edit.js"></script>
+<br />
+<hr />
+<center></p>
+<p>Recent logs for this item:</p></center>
+<%include file="/logs_list.html" args="logs=logs"/>
+
+</%def>

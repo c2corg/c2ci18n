@@ -1,0 +1,41 @@
+## -*- coding: utf-8 -*-
+<%page args="log"/>
+<%
+  import utils
+  import cgi
+  if log.state_changed == False:
+    log_class = 'normal'
+  else:
+    log_class = log.new_state
+%>
+
+<div class="log_entry ${log_class}">
+  <div class="log_info">
+    <span class="user">${log.user}</span> - <span class="version">r${log.translation_version}</span>
+    - <span class="time" title="${log.date.strftime('%Y-%m-%d %H:%M:%S')}">${utils.relative_time(log.date)}</span>
+  </div>
+  <div class="log_content">
+    <span class="info">msgid: </span><b><a class="msgid" href="/translations/edit/${log.translation_ref.key().id()}">${log.translation_msgid}</a></b><br />
+    % if log.lang != 'general' and log.lang != 'creation':
+    <span class="info">language: </span><b>${log.lang}</b><br />
+    % endif
+    % if log.lang == 'creation':
+    <span class="info">String creation</span><br />
+    % endif
+    % if log.state_changed:
+    <span class="changed_item">State changed from <b>${log.old_state}</b> to <b>${log.new_state}</b></span><br />
+    % endif
+    % if log.text_changed:
+    <span class="changed_item">Translation changed to:
+    <a href="" onclick="new Effect.Appear('diff_text${log.key().id()}'); this.hide(); return false;">(diff)</a></span>
+    <div class="quote ${log_class}">${utils.escape_n(log.new_text)}</div>
+    <div class="diff_wrapper" id="diff_text${log.key().id()}" style="display:none">${utils.html_diff([ cgi.escape(log.old_text), cgi.escape(log.new_text) ])}</div>
+    % endif
+    % if log.comment_changed:
+    <span class="changed_item">Comment changed to:
+    <a href="" onclick="new Effect.Appear('diff_comment${log.key().id()}'); this.hide(); return false;">(diff)</a></span>
+    <div class="quote">${utils.escape_n(log.new_comment)}</div>
+    <div class="diff_wrapper" id="diff_comment${log.key().id()}" style="display:none">${utils.html_diff([ cgi.escape(log.old_comment), cgi.escape(log.new_comment) ])}</div>
+    % endif
+  </div>
+</div>

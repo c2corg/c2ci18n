@@ -1,0 +1,30 @@
+## -*- coding: utf-8 -*-
+<%
+  import utils
+%>\
+msgid ""
+msgstr ""
+"Project-Id-Version: Camptocamp.org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+% for translation in translations:
+% if getattr(translation, 'comment'):
+# ${utils.escape_po_comment('[general comment]\n'+translation.comment)}
+% endif
+% if getattr(translation, lang + '_comment'):
+# ${utils.escape_po_comment('[comment]\n'+getattr(translation, lang + '_comment'))}
+% endif
+<%
+  l = utils.get_actual_translation(translation, lang)
+  msg_str = utils.escape_po(l[0])
+  warning = l[1]
+%>\
+% if warning:
+${warning}
+% endif
+msgid "${translation.msgid}"
+msgstr "${msg_str}"
+
+% endfor

@@ -1,0 +1,20 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+
+<%def name="body()">
+
+<%include file="/logs_list.html" args="logs=logs"/>
+
+<p class="prevnext">
+% if prevuri:
+  <a href="${prevuri}">Previous page</a>
+% endif
+% if prevuri and nexturi:
+  -
+%endif
+% if nexturi:
+  <a href="${nexturi}">Next page</a>
+% endif
+</p>
+
+</%def>

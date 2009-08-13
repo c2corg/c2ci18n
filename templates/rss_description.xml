@@ -1,0 +1,22 @@
+## -*- coding: utf-8 -*-
+<%page args="log"/>\
+<%
+  import utils, cgi
+%>\
+% if log.lang != 'general' and log.lang != 'creation':
+<p><b>language:</b> ${log.lang}</p>
+% endif
+% if log.lang == 'creation':
+<p><b>String creation</b></p>
+% endif
+% if log.state_changed:
+<p>State changed from <b>${log.old_state}</b> to <b>${log.new_state}</b></p>
+% endif
+% if log.text_changed:
+<p>Translation changed to:<br />
+<span style="background-color:#f2f2f2;">${utils.escape_n(log.new_text)}</span></p>
+% endif
+% if log.comment_changed:
+<p>Comment changed to:<br />
+<span style="background-color:#f2f2f2;">${utils.escape_n(log.new_comment)}</span></p>
+% endif

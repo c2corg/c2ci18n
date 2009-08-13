@@ -1,0 +1,34 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+\
+<%def name="body()">
+\
+<div id="welcome">
+<p>Welcome to the <a href="http://www.camptocamp.org">camptocamp.org</a> Localization web site.</p>
+<p>You must sign in in order to start translating.<br />
+Have a look at <a href="/help">this page</a> for some help and guidelines.</p>
+<p>The following figure shows how many strings are ready to be translated, and how many are actually translated.<br />
+Use the left menu to start translating c2c to your language.</p>
+</div>
+% if not charts is None:
+<%
+  total = charts[0][0] + charts[1][0] + charts[2][0] + charts[3][0]
+  frp = round(charts[0][0] / float(total) * 100, 1)
+  itp = round(charts[0][1] / float(total) * 100, 1)
+  dep = round(charts[0][2] / float(total) * 100, 1)
+  enp = round(charts[0][3] / float(total) * 100, 1)
+  esp = round(charts[0][4] / float(total) * 100, 1)
+  cap = round(charts[0][5] / float(total) * 100, 1)
+  eup = round(charts[0][6] / float(total) * 100, 1)
+%>\
+\
+<center>
+<img src="${chart_url}" />
+<p><small>
+french: ${frp}%, italian: ${itp}%, german: ${dep}%, english: ${enp}%, spanish: ${esp}%, catalan: ${cap}%, basque: ${eup}%
+</p></small>
+</center>
+% endif
+</p>
+\
+</%def>

@@ -1,0 +1,11 @@
+## -*- coding: utf-8 -*-
+<%page args="logs"/>
+<div id="logs">
+% if len(logs) != 0:
+%   for log in logs:
+      <%include file="/base_log.html" args="log=log"/>
+%   endfor
+% else:
+  <center>No logs</center>
+% endif
+</div>

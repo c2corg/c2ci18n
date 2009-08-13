@@ -1,0 +1,15 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+
+<%def name="body()">
+
+<form action="/translations/add" method="post">
+  <center>
+  <div>
+    <label for="msgid">Enter the 'msgid' of the string you want to add to the collection:<br /></label><input name="msgid" />
+    <input type="submit" value="Add translation item">
+  </div>
+  </center>
+</form>
+
+</%def>
