@@ -119,24 +119,26 @@ class MainHandler(webapp.RequestHandler):
 ###############################################################
 
 class ListHandler(webapp.RequestHandler):
-  def get(self):
+  def get(self, lang_filter=None, state_filter=None):
     secure_page(self)
 
     page = int(self.request.get('page', '0'))
-    translations, next = models.get_translations(page)
+    translations, next = models.get_translations(page, lang_filter, state_filter)
+
+    filter_suffix = edit_filter_suffix(lang_filter, state_filter)
 
     if translations is None:
       error404(self)
       return
 
     if next:
-      nexturi = '/translations/list?page=%s' % (page + 1)
+      nexturi = '/translations/list' + filter_suffix + '?page=%s' % (page + 1)
     else:
       nexturi = None
     if page > 1:
-      prevuri = '/translations/list?page=%s' % (page - 1)
+      prevuri = '/translations/list' + filter_suffix + '?page=%s' % (page - 1)
     elif page == 1:
-      prevuri = '/translations/list'
+      prevuri = '/translations/list' + filter_suffix
     else:
       prevuri = None
 
@@ -147,6 +149,7 @@ class ListHandler(webapp.RequestHandler):
       'translations': translations,
       'nexturi': nexturi,
       'prevuri': prevuri,
+      'uri_suffix': filter_suffix
     }
 
     self.response.out.write(Template(filename=template_file,lookup=mylookup).render_unicode(**template_values))
@@ -352,6 +355,8 @@ application = webapp.WSGIApplication(
   [
     ('/', MainHandler),
     ('/translations/list', ListHandler),
+    ('/translations/list/filter/lang/(fr|it|de|en|es|ca|eu)', ListHandler),
+    ('/translations/list/filter/lang/(fr|it|de|en|es|ca|eu)/(translated|needs_review|needs_update|needs_translation)', ListHandler),
     ('/translations/add', AddHandler),
     ('/translations/edit/([0-9]+)', EditHandler),
     ('/translations/edit/([0-9]+)/filter/lang/(fr|it|de|en|es|ca|eu)', EditHandler),

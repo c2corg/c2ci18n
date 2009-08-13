@@ -7,7 +7,8 @@ from google.appengine.ext import db
 from google.appengine.api import memcache
 from google.appengine.api import users
 
-PAGE_SIZE = 20
+LIST_PAGE_SIZE = 30
+LOG_PAGE_SIZE = 20
 LOG_LIMIT = 10
 LANGS = ['fr','it','de','en','es','ca','eu']
 STATUSES = ['translated','needs_update','needs_review','needs_translation']
@@ -188,36 +189,54 @@ def make_translation_archive(translation):
     return new.key().id()
   return db.run_in_transaction(txn)
 
+########################################################################
+
+def apply_list_filter(query, lang_filter=None, state_filter=None):
+  """ this one is a bit simpler than get_next_translation_id, since
+      we don't allow state_filter without lang_filter (see urls in main.py) """
+  if lang_filter is None:
+    return query # this shouldn't happen
+
+  if not state_filter is None:
+    sf = [ state_filter ]
+  else:
+    sf = [ 'needs_translation', 'needs_review', 'needs_update' ]
+
+  return query.filter(lang_filter + '_state IN', sf)
 
 ########################################################################
 
-def get_translations(page=0):
+def get_translations(page=0, lang_filter=None, state_filter=None):
   """ translations list (paginated) """
   assert page >=0
   extra = None
 
   #fetch offset limit=1000
-  if page*PAGE_SIZE > 1000:
+  if page*LIST_PAGE_SIZE > 1000:
     last_item = None
-    while page*PAGE_SIZE > 1000:
+    while page*LIST_PAGE_SIZE > 1000:
       if last_item is None:
-        last_item = Translation.all().order('msgid').filter('is_last_version =', True).fetch(1, 1000)
+        last_item = apply_list_filter(Translation.all().order('msgid'), lang_filter, state_filter) \
+                    .filter('is_last_version =', True).fetch(1, 1000)
       else:
-        last_item = Translation.all().order('msgid').filter('msgid >=', last_item[0].msgid) \
-                                   .filter('is_last_version =', True).fetch(1, 1000)
+        last_item = apply_list_filter(Translation.all().order('msgid'), lang_filter, state_filter) \
+                    .filter('msgid >=', last_item[0].msgid) \
+                    .filter('is_last_version =', True).fetch(1, 1000)
       if not last_item:
         return None, None
-      page = page - (1000 / PAGE_SIZE)
+      page = page - (1000 / LIST_PAGE_SIZE)
 
-    translations = Translation.all().order('msgid').filter('msgid >=', last_item[0].msgid) \
-                                    .filter('is_last_version =', True).fetch(PAGE_SIZE+1, page*PAGE_SIZE)
+    translations = apply_list_filter(Translation.all().order('msgid'), lang_filter, state_filter) \
+                   .filter('msgid >=', last_item[0].msgid) \
+                   .filter('is_last_version =', True).fetch(LIST_PAGE_SIZE+1, page*LIST_PAGE_SIZE)
   ## no worry about offset limit
   else:
-    translations = Translation.all().order('msgid').filter('is_last_version =', True).fetch(PAGE_SIZE+1, page*PAGE_SIZE)
+    translations = apply_list_filter(Translation.all().order('msgid'), lang_filter, state_filter) \
+                   .filter('is_last_version =', True).fetch(LIST_PAGE_SIZE+1, page*LIST_PAGE_SIZE)
 
-  if len(translations) > PAGE_SIZE:
+  if len(translations) > LIST_PAGE_SIZE:
     extra = translations[-1]
-    translations = translations[:PAGE_SIZE]
+    translations = translations[:LIST_PAGE_SIZE]
 
   translations_tpl = []
   for translation in translations:
@@ -297,7 +316,7 @@ def get_next_translation_id(translation=None, lang_filter=None, state_filter=Non
 
 ########################################################################
 
-def get_logs(page=0, lang_filter=None, page_size=PAGE_SIZE):
+def get_logs(page=0, lang_filter=None, page_size=LOG_PAGE_SIZE):
   """ returns page_size logs per page in reverse date order
       can be filtered on lang """
   assert page >=0
@@ -414,4 +433,4 @@ def updateTranslation(id, request):
   return last_translation.key().id()
 #  except db.Error: TODO
 #    return None
-#run in transaction....???? faudrait foutre des locks sur les tables
+#run in transaction?

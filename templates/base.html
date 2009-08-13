@@ -84,18 +84,7 @@
         <div class="menu_title">Translate</div>
         <ul class="menu_items">
           <li class="menu_item">
-            <a href="" title="All languages">All languages</a>
-            <ul class="submenu_items">
-              <li class="submenu_item"><a href="/translations/edit/0" title="Browse all strings">All strings</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/translated"
-                  title="Browse strings for which at least one language has been translated">Partially translated strings</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/needs_review"
-                  title="Browse strings for which at least one language needs review">Strings that need review</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/needs_update"
-                  title="Browse strings for which at least one language needs update">Strings that need update</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/all/needs_translation"
-                  title="Browse strings for which at least one language needs translation">Strings that need translation</a></li>
-            </ul>
+            <a href="/translations/list" title="All languages">All languages</a>
           </li>
           <%
             langs = [ 'fr', 'it', 'de', 'en', 'es', 'ca', 'eu' ]
@@ -105,15 +94,15 @@
           <li class="menu_item">
             <a href="" onclick="return false;" title="Browse strings in ${langs_long[lang]}">${langs_long[lang].capitalize()}</a>
             <ul class="submenu_items">
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/translated"
+              <li class="submenu_item"><a href="/translations/list/filter/lang/${lang}/translated"
                   title="Browse all strings that are already translated in ${langs_long[lang]}">Already translated strings</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}"
+              <li class="submenu_item"><a href="/translations/list/filter/lang/${lang}"
                   title="Browse all strings that need action in ${langs_long[lang]}">Strings that need action</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/needs_review"
+              <li class="submenu_item"><a href="/translations/list/filter/lang/${lang}/needs_review"
                   title="Browse all strings that need review in ${langs_long[lang]}">Strings that need review</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/needs_update"
+              <li class="submenu_item"><a href="/translations/list/filter/lang/${lang}/needs_update"
                   title="Browse all strings that need update in ${langs_long[lang]}">Strings that need update</a></li>
-              <li class="submenu_item"><a href="/translations/edit/0/filter/lang/${lang}/needs_translation"
+              <li class="submenu_item"><a href="/translations/list/filter/lang/${lang}/needs_translation"
                   title="Browse all strings that need translation in ${langs_long[lang]}">Strings that need translation</a></li>
             </ul>
           </li>
