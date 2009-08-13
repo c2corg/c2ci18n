@@ -47,6 +47,7 @@ for ($i = 0; $i < $count; $i++) {
   print $ca_pofile->gettext($msgid);
   print "\t";
   print $eu_pofile->gettext($msgid);
+  print "\t";
   print "\n";
 
 }
