@@ -19,7 +19,7 @@
 <p><center>
 <input type="submit" id="save_link" href="" value="Save your changes" onclick="save_ok=false;" />
 <a id="cancel_link" href="/translations/edit/${translation['id']}${url_suffix}"
-         title="Discard your changes" onclick="save_state(false); return true;"><input type="button" value="Discard changes" /></a>
+         title="Discard your changes" onclick="save_ok = false; return true;"><input type="button" value="Discard changes" /></a>
 % if not next_to_edit is None:
 <a href="/translations/edit/${next_to_edit}${url_suffix}" title="Go to the next untranslated string"><input type="button" value="Next item" /></a>
 % endif
@@ -70,7 +70,7 @@
 <p><center>
 <input type="submit" id="save_link" href="" value="Save your changes" accesskey="S" onclick="save_ok=false;" />
 <a id="cancel_link" href="/translations/edit/${translation['id']}${url_suffix}" accesskey="D"
-         title="Discard your changes" onclick="save_state(false); return true;"><input type="button" value="Discard changes" /></a>
+         title="Discard your changes" onclick="save_ok = false; return true;"><input type="button" value="Discard changes" /></a>
 % if not next_to_edit is None:
 <a href="/translations/edit/${next_to_edit}${url_suffix}" accesskey="N" title="Go to the next untranslated string">
 <input type="button" value="Next item" /></a>
