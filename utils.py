@@ -78,7 +78,7 @@ def escape_n(s):
 
 #########################################################
 def escape_po(s):
-  return s.replace('"', '\"').replace('\n', '\\n"\n"')
+  return s.replace('"', '\\"').replace('\n', '\\n"\n"')
 
 #########################################################
 def escape_po_comment(s):

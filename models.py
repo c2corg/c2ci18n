@@ -251,7 +251,7 @@ def get_all_translations():
   counter = 0
   translations = []
 
-  while counter == 0 or len(some_translations) > size:
+  while counter == 0 or len(some_translations) >= size:
     some_translations = Translation.all().order('msgid').filter('is_last_version =', True).fetch(size, counter*size)
     counter +=1
     translations += some_translations
