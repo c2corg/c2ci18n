@@ -21,7 +21,7 @@ Event.observe(window, 'unload', function() {
   if (!save_ok) return false;
 
   r = confirm('You have unsaved changes.\nDo you want to save them before leaving this page?');
-  if (r == true) {
+  if (r) {
     /*save_translation();*/
     $('edit_form').submit();
   }
