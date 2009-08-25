@@ -94,7 +94,7 @@ def chart_url(chart_values):
   total = chart_values[0][0] + chart_values[1][0] + chart_values[2][0] + chart_values[3][0]
 
   return "http://chart.apis.google.com/chart?chtt=Translation+status&cht=bhs&chs=550x230&chd=t:" + values_string + \
-         "&chco=C2EAAE,FFCC80,FFFF99,FF8080&chdl=Translated|Needs review|Needs update|Needs translation" + \
+         "&chco=C2EAAE,FFFF99,FFCC80,FF8080&chdl=Translated|Needs update|Needs review|Needs translation" + \
          u"&chxt=y,x&chxl=0:|euskara|català|español|english|deutsch|italiano|français&chds=0," + \
          str(total) + "&chxr=1,0," + str(total)
   
