@@ -145,7 +145,7 @@ def get_actual_translation(translation, lang, warning=False):
     if translation.ca_state == 'needs_translation':
       return get_actual_translation(translation, 'es', True)
     else:
-      return [ translation.es, error_msg ]
+      return [ translation.ca, error_msg ]
 
   if lang == 'eu':
     if translation.eu_state == 'needs_translation':
