@@ -58,6 +58,14 @@ def edit_filter_suffix(lang_filter, state_filter):
 
 ###############################################################
 
+def recentchanges_filter_suffix(lang_filter):
+  if lang_filter is None:
+    return ''
+  else:
+    return '/' + lang_filter
+
+###############################################################
+
 def secure_page(handler, need_admin=False):
   user = users.get_current_user()
   admin = users.is_current_user_admin()
@@ -245,14 +253,16 @@ class ChangesHandler(webapp.RequestHandler):
       error404(self)
       return
 
+    filter_suffix = recentchanges_filter_suffix(lang_filter)
+
     if next:
-      nexturi = '/recentchanges?page=%s' % (page + 1)
+      nexturi = '/recentchanges' + filter_suffix + '?page=%s' % (page + 1)
     else:
       nexturi = None
     if page > 1:
-      prevuri = '/recentchanges?page=%s' % (page - 1)
+      prevuri = '/recentchanges' + filter_suffix + '?page=%s' % (page - 1)
     elif page == 1:
-      prevuri = '/recentchanges'
+      prevuri = '/recentchanges' + filter_suffix
     else:
       prevuri = None
 
