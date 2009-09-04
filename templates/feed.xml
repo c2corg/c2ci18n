@@ -1,6 +1,7 @@
 ## -*- coding: utf-8 -*-
 <%
   import utils
+  import cgi
 %>\
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -17,7 +18,7 @@
   </author>
   % for entry in entries:
   <entry>
-    <title type="text">msgid "${entry.translation_msgid}"</title>
+    <title type="text">msgid "${cgi.escape(entry.translation_msgid)}"</title>
     <link rel="alternate" type="text/html" href="http://c2ci18n.appspot.com/translations/edit/${entry.translation_ref.key().id()}"/>
     <id>http://c2ci18n.appspot.com/translations/edit/${entry.translation_ref.key().id()}_change${entry.key().id()}</id>
     <updated>${utils.rfc3339date(entry.date)}</updated>
