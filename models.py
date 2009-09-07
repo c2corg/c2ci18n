@@ -372,6 +372,30 @@ def createNewTranslation(msgid):
 
 ########################################################################
 
+def deleteTranslation(translationid):
+  translation = Translation.get_by_id(translationid)
+
+  if translation is None:
+    return
+
+  # decrement counters
+  for lang in LANGS:
+    status = getattr(translation, lang+'_state')
+    decrementCounter(lang, status)
+
+  # delete logs
+  logs = Log.all().filter('translation_ref =', translation).fetch(1000) # hope they won't be more :)
+  db.delete(logs)
+
+  #delete translations
+  translations = Translation.all().filter('msgid =', translation.msgid).fetch(1000) # hope they won't be more :)
+  db.delete(translations)
+
+  return
+    
+
+########################################################################
+
 def updateTranslation(id, request):
   last_translation = Translation.get_by_id(long(id))
 

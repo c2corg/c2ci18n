@@ -313,6 +313,16 @@ class SearchHandler(webapp.RequestHandler):
 
 ###############################################################
 
+class DeleteHandler(webapp.RequestHandler):
+  def get(self, translationid):
+    secure_page(self, need_admin=True)
+
+    models.deleteTranslation(int(translationid))
+
+    self.redirect('/')
+
+###############################################################
+
 class FeedHandler(webapp.RequestHandler):
   def get(self):
     logs, extra = models.get_logs(page=0, page_size=30)
@@ -371,6 +381,7 @@ application = webapp.WSGIApplication(
     ('/translations/edit/([0-9]+)', EditHandler),
     ('/translations/edit/([0-9]+)/filter/lang/(fr|it|de|en|es|ca|eu)', EditHandler),
     ('/translations/edit/([0-9]+)/filter/lang/(fr|it|de|en|es|ca|eu|all)/(translated|needs_review|needs_update|needs_translation)', EditHandler),
+    ('/translations/delete/([0-9]+)', DeleteHandler),
     ('/recentchanges', ChangesHandler),
     ('/recentchanges/(fr|it|de|en|es|ca|eu)', ChangesHandler),
     ('/translations/search', SearchHandler),
