@@ -1,0 +1,50 @@
+## -*- coding: utf-8 -*-
+<%inherit file="/base.html"/>
+
+<%def name="body()">
+<h3>États de traduction</h3>
+<p>
+Les chaînes de traduction peuvent être dans 4 états différents&nbsp;:
+<li><b>translated</b> (traduit)&nbsp;: la traduction est valide</li>
+<li><b>needs update</b> (à mettre à jour)&nbsp;: la traduction doit être mise à jour car le sens de la chaîne a changé</li>
+<li><b>needs review</b>(à vérifier)&nbsp;: la traduction est peut être incorrecte et nécessite une vérification</li>
+<li><b>needs translation</b>(à traduire)&nbsp;: la chaîne n'est pas traduite
+
+Le texte entré dans un champ avec un état 'needs translation' (à traduire) n'a pas d'effet. 
+</p>
+<p>
+Une fois que vous avez traduit / vérifié / mis à jour une chaîne, n'oubliez pas de mettre à jour sont état.
+</p>
+<h3>Commentaires de traduction</h3>
+<p>
+Pour chaque chaîne, vous disposez d'un commentaire général (utilisé pour expliquer le sens de la chaîne à traduire),
+et d'un commentaire par langue pour des besoins spécifique à chaque langue.
+</p>
+<h3>Quelle traduction est utilisée ?</h3>
+<p>
+Si une chaîne a une traduction (c'est à dire qu'elle a un statut différent de 'needs translation'), celle-ci est utilisée.
+Sinon, la meilleure traduction dans les autres langues est utilisée. Par exemple, si la version catalane n'existe pas,
+la version espagnole sera utilisée, ou à défaut la version anglais, etc. 
+</p>
+<h3>Où puis-je trouver le msgid de la chaîne correspondant à une traduction ?</h3>
+<p>
+Aidez-vous du <a href="http://dev.camptocamp.org/trac/c2corg/browser/trunk/camptocamp.org/apps/frontend/i18n">répertoire i18n</a>
+dans le dépôt subversion. 
+</p>
+<h3>Comment puis-je ajouter une nouvelle chaîne ?</h3>
+<p>
+Seuls les développeurs peuvent ajouter une nouvelle chaîne. 
+</p>
+<h3>Typographie</h3>
+<p>
+Seul le français utilise un espace devant ':' ou '!'. Un espace insécable peut être inséré avec '&amp;nbsp;',
+mais utilisez le avec précaution, il n'est pas nécessaire pour toutes les chaînes.
+</p>
+<p>
+Notez que certaines chaînes peuvent contenir un espace en dernière position (ce cas est rare).
+Pensez à ajouter un commentaire général sur la chaîne afin que les traducteurs ne l'oublient pas.
+</p>
+<p>
+<center>À compléter</center>
+</p>
+</%def>

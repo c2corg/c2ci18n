@@ -353,8 +353,8 @@ class PoHandler(webapp.RequestHandler):
 ###############################################################
 
 class HelpHandler(webapp.RequestHandler):
-  def get(self):
-    template_file = os.path.join(os.path.dirname(__file__), 'templates/help.html')
+  def get(self, lang):
+    template_file = os.path.join(os.path.dirname(__file__), 'templates/help_'+lang+'.html')
     template_values = {
       'greeting': get_greeting(),
       'is_admin': users.is_current_user_admin(),
@@ -387,7 +387,7 @@ application = webapp.WSGIApplication(
     ('/translations/search', SearchHandler),
     ('/feed.rss', FeedHandler),
     ('/po/messages.(fr|it|de|en|es|ca|eu).po', PoHandler),
-    ('/help', HelpHandler),
+    ('/help/(fr|en)', HelpHandler),
     ('/.*', NotFoundPageHandler)
   ], debug=True)
 
