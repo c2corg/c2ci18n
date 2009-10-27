@@ -64,8 +64,8 @@ a:hover {
 }
 
 #left_menus .menu_items, #left_menus .submenu_items {
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 #left_menus li.menu {
@@ -82,8 +82,13 @@ a:hover {
   margin-bottom: 2px;
 }
 
-#left_menus li.menu_item {
+#left_menus li.menu_item, #left_menus li.submenu_item {
   position: relative;
+  display: block;
+  padding-left: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  text-decoration: none;
 }
 
 #left_menus li.menu_item ul {
@@ -91,14 +96,6 @@ a:hover {
   top: 0;
   left: 100%;
   width: 100%;
-}
-
-#left_menus li.menu_item a, #left_menus li.submenu_item a {
-  display: block;
-  padding-left: 8px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  text-decoration: none;
 }
 
 #left_menus li.menu_item:hover, #left_menus li.submenu_item:hover {

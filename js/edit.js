@@ -1,4 +1,4 @@
-var save_ok = false;
+var warning_changes = false;
 var languages = ['fr', 'it', 'de', 'en', 'es', 'ca', 'eu']
 
 /** easily retrieve selected value of a radio button group */
@@ -16,21 +16,22 @@ function $RF(el, radioGroup) {
   return (checked) ? $F(checked) : null;
 }
 
-/** If user tries to quit page with unsaved changes, ask if the chanegs should really be discarded */
-Event.observe(window, 'unload', function() {
-  if (!save_ok) return false;
+/** If user tries to quit page with unsaved changes, ask if the changes should really be discarded */
+function check_changes() {
+  if (!warning_changes) return true;
 
   r = confirm('You have unsaved changes.\nDo you want to save them before leaving this page?');
   if (r) {
-    /*save_translation();*/
+    // save translation before going to quit page
+    warning_changes = false;
     $('edit_form').submit();
   }
-});
+};
 
 /** textarea changes: new changes to potentially save */
 $$('textarea').each(
   function(item) {
-    Event.observe(item, 'change', function() { save_ok = true; });
+    Event.observe(item, 'change', function() { warning_changes = true; });
   }
 );
 
@@ -39,7 +40,7 @@ $$('input').each(
   function(item) {
     if (item.type && item.type.toLowerCase() == 'radio') {
       Event.observe(item, 'change', function() {
-        save_ok = true
+        warning_changes = true
         new_class = $F(item);
         textarea = $(item.name.substr(0, 2));
         textarea.classNames().each( function(cl) { textarea.removeClassName(cl) } );

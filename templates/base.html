@@ -111,13 +111,18 @@
           % endfor
           <li class="menu_item"><a href="/recentchanges" title="See recent changes">Recent changes</a>
             <ul class="submenu_items">
-              <li class="submenu_item"><a href="/recentchanges" title="All recent changes">All languages</a>
+              <li class="submenu_item">
+                <a href="/feed.rss" title="Latest changes rss feed"><img src="/images/rss.gif" /></a>&nbsp;
+                <a href="/recentchanges" title="All recent changes">All languages</a>
+              </li>
               % for lang in langs:
-              <li class="submenu_item"><a href="/recentchanges/${lang}" title="Recent changes for ${langs_long[lang]}">${langs_long[lang].capitalize()}</a><li>
+              <li class="submenu_item">
+                <a href="/feed_${lang}.rss" title="Latest ${langs_long[lang]} changes rss feed"><img src="/images/rss.gif" /></a>&nbsp;
+                <a href="/recentchanges/${lang}" title="Recent changes for ${langs_long[lang]}">${langs_long[lang].capitalize()}</a>
+              </li>
               % endfor
             </ul>
           </li>
-          <li class="menu_item"><a href="/feed.rss" title="Latest changes rss feed">Latest changes feed &nbsp;<img src="/images/rss.gif" /></a></li>
         </ul>
       </li>
       <li class="menu">

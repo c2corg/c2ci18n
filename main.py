@@ -324,8 +324,8 @@ class DeleteHandler(webapp.RequestHandler):
 ###############################################################
 
 class FeedHandler(webapp.RequestHandler):
-  def get(self):
-    logs, extra = models.get_logs(page=0, page_size=30)
+  def get(self, lang_filter=None):
+    logs, extra = models.get_logs(page=0, page_size=30, lang_filter=lang_filter)
 
     template_file = os.path.join(os.path.dirname(__file__), 'templates/feed.xml')
     template_values = {
@@ -386,6 +386,7 @@ application = webapp.WSGIApplication(
     ('/recentchanges/(fr|it|de|en|es|ca|eu)', ChangesHandler),
     ('/translations/search', SearchHandler),
     ('/feed.rss', FeedHandler),
+    ('/feed/(fr|it|de|en|es|ca|eu).rss', FeedHandler),
     ('/po/messages.(fr|it|de|en|es|ca|eu).po', PoHandler),
     ('/help/(fr|en)', HelpHandler),
     ('/.*', NotFoundPageHandler)

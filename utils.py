@@ -78,7 +78,9 @@ def escape_n(s):
 
 #########################################################
 def escape_po(s):
-  return s.replace('\\', '\\\\').replace('"', '\\"').replace('\r\n', '\\n"\n"')
+  """Trailing linebreaks are stripped. Special characters are handled.
+     Internal linebreaks are handled for better msgstr display"""
+  return s.replace('\\', '\\\\').replace('"', '\\"').strip('\r\n').replace('\r\n', '\\n"\n"')
 
 #########################################################
 def escape_po_comment(s):
