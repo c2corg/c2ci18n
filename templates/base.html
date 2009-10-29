@@ -117,7 +117,7 @@
               </li>
               % for lang in langs:
               <li class="submenu_item">
-                <a href="/feed_${lang}.rss" title="Latest ${langs_long[lang]} changes rss feed"><img src="/images/rss.gif" /></a>&nbsp;
+                <a href="/feed/${lang}.rss" title="Latest ${langs_long[lang]} changes rss feed"><img src="/images/rss.gif" /></a>&nbsp;
                 <a href="/recentchanges/${lang}" title="Recent changes for ${langs_long[lang]}">${langs_long[lang].capitalize()}</a>
               </li>
               % endfor
