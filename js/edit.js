@@ -20,7 +20,7 @@ function $RF(el, radioGroup) {
 function check_changes() {
   if (!warning_changes) return true;
 
-  r = confirm('You have unsaved changes.\nDo you want to save them before leaving this page?');
+  r = confirm('You have unsaved changes.\nClick \'Ok\' if you want to save them before leaving the page');
   if (r) {
     // save translation before going to quit page
     warning_changes = false;
@@ -28,19 +28,14 @@ function check_changes() {
   }
 };
 
-/** textarea changes: new changes to potentially save */
-$$('textarea').each(
-  function(item) {
-    Event.observe(item, 'change', function() { warning_changes = true; });
-  }
-);
+/** watch for changes to the form */
+new Form.Observer('edit_form', 0.3, function() { warning_changes = true; });
 
 /** radio buttons changes: update textarea color */
 $$('input').each(
   function(item) {
     if (item.type && item.type.toLowerCase() == 'radio') {
       Event.observe(item, 'change', function() {
-        warning_changes = true
         new_class = $F(item);
         textarea = $(item.name.substr(0, 2));
         textarea.classNames().each( function(cl) { textarea.removeClassName(cl) } );
