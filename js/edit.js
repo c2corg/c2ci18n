@@ -29,7 +29,9 @@ function check_changes() {
 };
 
 /** watch for changes to the form */
-new Form.Observer('edit_form', 0.3, function() { warning_changes = true; });
+Event.observe(window, 'load', function() {
+  new Form.Observer('edit_form', 0.3, function() { warning_changes = true; });
+});
 
 /** radio buttons changes: update textarea color */
 $$('input').each(
