@@ -15,7 +15,7 @@
     - <span class="time" title="${log.date.strftime('%Y-%m-%d %H:%M:%S')}">${utils.relative_time(log.date)}</span>
   </div>
   <div class="log_content">
-    <span class="info">msgid: </span><b><a class="msgid" href="/translations/edit/${log.translation_ref.key().id()}">${log.translation_msgid}</a></b><br />
+    <span class="info">msgid: </span><b><a class="msgid" href="/translations/edit/${log.translation_ref.key().id()}">${log.translation_msgid | h}</a></b><br />
     % if log.lang != 'general' and log.lang != 'creation':
     <span class="info">language: </span><b>${log.lang}</b><br />
     % endif

@@ -10,7 +10,7 @@
   <tr><th>msgid</th><th>fr</th><th>it</th><th>de</th><th>en</th><th>es</th><th>ca</th><th>eu</th></tr>
 % for translation in translations:
   <tr>
-    <td class="normal"><a href="/translations/edit/${translation['id']}${uri_suffix}">${translation['msgid']}</a></td>
+    <td class="normal"><a href="/translations/edit/${translation['id']}${uri_suffix}">${translation['msgid'] | h}</a></td>
     <td class="${translation['fr_state']}">${translation['fr_state']}</td>
     <td class="${translation['it_state']}">${translation['it_state']}</td>
     <td class="${translation['de_state']}">${translation['de_state']}</td>

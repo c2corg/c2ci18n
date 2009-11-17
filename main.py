@@ -307,7 +307,7 @@ class SearchHandler(webapp.RequestHandler):
     results = query.fetch(10)
     s = '<ul>'
     for result in results:
-      s += '<li id="' + str(result.key().id()) + '">' + result.msgid + '</li>'
+      s += '<li id="' + str(result.key().id()) + '">' + cgi.escape(result.msgid) + '</li>'
     s += '</ul>'
     self.response.out.write(s)
 
