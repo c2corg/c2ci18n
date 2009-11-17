@@ -1,8 +1,11 @@
 ## -*- coding: utf-8 -*-
 <%inherit file="/base.html"/>
 <%def name="body()">
+<%
+  import cgi
+%>
 <form id="edit_form" action="" method="post">
-  <center>msgid: <b>${translation['msgid'] | h}</b>
+  <center>msgid: <b><u>${cgi.escape(translation['msgid']).replace(' ', '&nbsp;')}</u></b>
   % if is_admin:
   &nbsp;&nbsp;<small>[<a href="/translations/delete/${translation['id']}" title="Delete this string"
   onclick="if (!confirm('Are you sure you want to delete this item?')) return false;">delete</a>]</small>
