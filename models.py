@@ -246,16 +246,27 @@ def get_translations(page=0, lang_filter=None, state_filter=None):
 ########################################################################
 
 def get_all_translations():
-  """ get ALL translations """
+  """ get ALL translations
+      we will retrieve translations 500 by 500 (fetch limit is 1000)"""
+
   size = 500
-  counter = 0
   translations = []
+  last_item = None
+  fetch_needed = True
 
-  while counter == 0 or len(some_translations) >= size:
-    some_translations = Translation.all().order('msgid').filter('is_last_version =', True).fetch(size, counter*size)
-    counter +=1
-    translations += some_translations
+  while fetch_needed:
+    some_translations = Translation.all().order('msgid').filter('is_last_version =', True)
+    if last_item:
+      some_translations = some_translations.filter('msgid >=', last_item.msgid)
+    some_translations = some_translations.fetch(size+1)
 
+    if len(some_translations) > size:
+      last_item = some_translations[-1]
+    else:
+      fetch_needed = False
+
+    translations += some_translations[:size]
+    
   return translations
 
 ########################################################################
