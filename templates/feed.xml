@@ -20,6 +20,9 @@
     <title type="text">msgid "${entry.translation_msgid | x}"</title>
     <link rel="alternate" type="text/html" href="http://c2ci18n.appspot.com/translations/edit/${entry.translation_ref.key().id()}"/>
     <id>http://c2ci18n.appspot.com/translations/edit/${entry.translation_ref.key().id()}_change${entry.key().id()}</id>
+    <author>
+      <name>${entry.user}</name>
+    </author>
     <updated>${utils.rfc3339date(entry.date)}</updated>
     <summary type="html"><![CDATA[\
 <%include file="/rss_description.xml" args="log=entry"/>\
