@@ -3,13 +3,13 @@
 
 <%def name="body()">
 <h3>Translation states</h3>
-<p>
 Translation items can be in 4 states:
+<ul>
 <li><b>translated:</b> everything is fine</li>
 <li><b>needs update:</b> the translation should be updated because the meaning of the msgid evolved</li>
 <li><b>needs review:</b> the translation might be incorrect and should be reviewed</li>
 <li><b>needs translation:</b> the item is untranslated</li>
-</p>
+</ul>
 <p>
 The text entered in a texarea with a 'needs translation' state has no value.
 </p>
@@ -43,7 +43,5 @@ Only french uses a space before ':' or '!'. A non breakable space can be inserte
 <p>
 Be aware that some strings might have a trailing space (should be a rare case). You can add a general comment so that other translators do not miss it.
 </p>
-<p>
-<center>To be completed</center>
-</p>
+<div class="center">To be completed</div>
 </%def>

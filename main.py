@@ -101,10 +101,10 @@ def chart_url(chart_values):
 
   total = chart_values[0][0] + chart_values[1][0] + chart_values[2][0] + chart_values[3][0]
 
-  return "http://chart.apis.google.com/chart?chtt=Translation+status&cht=bhs&chs=550x230&chd=t:" + values_string + \
-         "&chco=C2EAAE,FFFF99,FFCC80,FF8080&chdl=Translated|Needs update|Needs review|Needs translation" + \
-         u"&chxt=y,x&chxl=0:|euskara|català|español|english|deutsch|italiano|français&chds=0," + \
-         str(total) + "&chxr=1,0," + str(total)
+  return "http://chart.apis.google.com/chart?chtt=Translation+status&amp;cht=bhs&amp;chs=550x230&amp;chd=t:" + values_string + \
+         "&amp;chco=C2EAAE,FFFF99,FFCC80,FF8080&amp;chdl=Translated|Needs%20update|Needs%20review|Needs%20translation" + \
+         u"&amp;chxt=y,x&amp;chxl=0:|euskara|català|español|english|deutsch|italiano|français&amp;chds=0," + \
+         str(total) + "&amp;chxr=1,0," + str(total)
   
   
 
@@ -237,7 +237,13 @@ class EditHandler(webapp.RequestHandler):
     else:
       status = '1'
 
-    self.redirect('/translations/edit/'+translationid+edit_filter_suffix(lang_filter, state_filter)+'?status='+status)
+    if self.request.get('gonext', 'false') == 'true':
+      translation = models.get_translation(long(translationid))
+      nexttranslationid = models.get_next_translation_id(translation, lang_filter, state_filter)
+      self.redirect('/translations/edit/'+str(nexttranslationid)+edit_filter_suffix(lang_filter, state_filter)+'?status='+status)
+    else:
+      self.redirect('/translations/edit/'+translationid+edit_filter_suffix(lang_filter, state_filter)+'?status='+status)
+
     return
 
 ###############################################################

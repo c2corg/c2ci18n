@@ -34,6 +34,10 @@ a:hover {
   text-decoration: underline;
 }
 
+.center {
+  text-align: center;
+}
+
 #logo {
   text-align: center;
 }
@@ -319,6 +323,12 @@ div.autocomplete ul li {
 .smallgrey {
   font-size: 80%;
   color: #6b90da;
+}
+
+.msgid
+{
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 p.prevnext {

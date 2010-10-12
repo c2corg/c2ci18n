@@ -5,12 +5,12 @@
   import cgi
 %>
 <form id="edit_form" action="" method="post">
-  <center>msgid: <b><u>${cgi.escape(translation['msgid']).replace(' ', '&nbsp;')}</u></b>
+  <div class="center">msgid: <span class="msgid">${cgi.escape(translation['msgid']).replace(' ', '&nbsp;')}</span>
   % if is_admin:
   &nbsp;&nbsp;<small>[<a href="/translations/delete/${translation['id']}" title="Delete this string"
   onclick="if (!confirm('Are you sure you want to delete this item?')) return false;">delete</a>]</small>
   % endif
-  </center>
+  </div>
   % if status == '1':
   <script type="text/javascript">
   Element.show('ajax_feedback_success'); new Effect.Fade('ajax_feedback_success', { duration: 3.0 });
@@ -22,22 +22,19 @@
   </script>
   % endif
   <hr />
-<p><center>
-<input title="Save your changes to this string" type="submit" id="save_link" value="Save your changes" />
+<p class="center">
+<input type="hidden" id="gonext" name="gonext" value="false" />
+<input title="Save your changes to this string" type="submit"  onclick="$('gonext').value=false; return true;" class="save_link" value="Save your changes" />
 % if not next_to_edit is None:
-<a href="/translations/edit/${next_to_edit}${url_suffix}" title="Go to the next untranslated string">
-<input type="button" value="Next item" onclick="check_changes()" /></a>
-<a href="/translations/edit/${next_to_edit}${url_suffix}" title="Save this string and go to the next one">
-<input type="button"  id="save_next_link" onclick="submit(); return true;" value="Save & Next" /></a>
+<input type="button" onclick="check_changes(); window.location.href='/translations/edit/${next_to_edit}${url_suffix}'" value="Next item" />
+<input title="Save this string and go to the next one" type="submit" onclick="$('gonext').value=true; return true;" class="save_next_link"  value="Save &amp; Next" />
 % endif
 &nbsp;&nbsp;
-<a id="cancel_link" href="/translations/edit/${translation['id']}${url_suffix}"
-         title="Discard your changes"><input type="button" value="Discard changes" /></a>
-</center>
+<input type="button" value="Discard changes" onclick="window.location.href='/translations/edit/${translation['id']}${url_suffix}'" />
+</p>
 <script type="text/javascript">var translation_id = ${translation['id']}</script>
 <script type="text/javascript" src="/js/edit.js"></script>
 <br />
-<center></p>
   <table>
     <tr>
       <td colspan="3">
@@ -74,25 +71,21 @@
     </tr>
   % endfor
   </table>
+  <p class="center">
+    <input title="Save your changes to this string" type="submit"  onclick="$('gonext').value=false; return true;" class="save_link" value="Save your changes" />
+    % if not next_to_edit is None:
+    <input type="button" onclick="check_changes(); window.location.href='/translations/edit/${next_to_edit}${url_suffix}'" value="Next item" />
+    <input title="Save this string and go to the next one" type="submit" onclick="$('gonext').value=true; return true;" class="save_next_link"  value="Save &amp; Next" />
+    % endif
+    &nbsp;&nbsp;
+    <input type="button" value="Discard changes" onclick="window.location.href='/translations/edit/${translation['id']}${url_suffix}'" />
+  </p>
 </form>
-<p><center>
-<input title="Save your changes to this string" type="submit" id="save_link" value="Save your changes" />
-% if not next_to_edit is None:
-<a href="/translations/edit/${next_to_edit}${url_suffix}" title="Go to the next untranslated string">
-<input type="button" value="Next item" onclick="check_changes()" /></a>
-<a href="/translations/edit/${next_to_edit}${url_suffix}" title="Save this string and go to the next one">
-<input type="button"  id="save_next_link" onclick="submit(); return true;" value="Save & Next" /></a>
-% endif
-&nbsp;&nbsp;
-<a id="cancel_link" href="/translations/edit/${translation['id']}${url_suffix}"
-         title="Discard your changes"><input type="button" value="Discard changes" /></a>
-</center>
 <script type="text/javascript">var translation_id = ${translation['id']}</script>
 <script type="text/javascript" src="/js/edit.js"></script>
 <br />
 <hr />
-<center></p>
-<p>Recent logs for this item:</p></center>
+<p class="center">Recent logs for this item:</p>
 <%include file="/logs_list.html" args="logs=logs"/>
 
 </%def>

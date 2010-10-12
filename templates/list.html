@@ -7,7 +7,7 @@
 %>\
 % if len(translations) != 0:
 
-<center>
+<div class="center">
 <table id="translation_list">
   <tr><th>msgid</th><th>fr</th><th>it</th><th>de</th><th>en</th><th>es</th><th>ca</th><th>eu</th></tr>
 % for translation in translations:
@@ -35,11 +35,11 @@
   <a href="${nexturi}">Next page</a> 
 % endif
 </p>
-</center>
+</div>
 
 % else:
 
-<center>Yay! Nothing to display here!</center>
+<div class="center">Yay! Nothing to display here!</div>
 
 % endif
 
