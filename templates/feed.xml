@@ -11,6 +11,7 @@
     hreflang="en" href="http://c2ci18n.appspot.com/"/>
   <link rel="self" type="application/atom+xml"
     href="http://c2ci18n.appspot.com/feed.rss"/>
+  <logo>http://c2ci18n.appspot.com/images/logomini.png</logo>
   <author>
     <name>camptocamp.org translation team</name>
     <uri>http://c2ci18n.appspot.com/</uri>
