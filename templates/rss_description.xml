@@ -21,6 +21,4 @@
 % if log.comment_changed:
 <p>Comment changed to:</p>
 <p style="background-color:#f2f2f2;">${utils.escape_n(log.new_comment)}</p>
-<p>Diff:</p>
-<p style="background-color:#f2f2f2;">${utils.html_diff([ cgi.escape(log.old_comment), cgi.escape(log.new_comment) ], True)}</p>
 % endif
