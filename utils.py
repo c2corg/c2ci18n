@@ -43,7 +43,7 @@ def check_value(t,l,s):
     return ''
 
 ########################################################
-def html_diff(strings):
+def html_diff(strings, standalone=False):
   """ produce html code to show differences between two strings """
   #¶
   out = ''
@@ -53,14 +53,23 @@ def html_diff(strings):
     s = s.replace('\n', u'¶')
     l.append(insert_spaces(s.split(' ')))
 
+  delend = '</del>'
+  insend = '</ins>'
+  if standalone == True:
+    delstart = '<del style="background-color: #ffb3b3;">'
+    insstart = '<ins style="background-color: #c2eaae;">'
+  else:
+    delstart = '<del class="diff modified">'
+    insstart = '<ins class="diff modified">'
+
   differ = difflib.SequenceMatcher(None, l[0], l[1])
   for e in differ.get_opcodes():
     if e[0] == "replace":
-      out += ('<del class="diff modified">'+''.join(l[0][e[1]:e[2]]) + '</del><ins class="diff modified">'+''.join(l[1][e[3]:e[4]])+"</ins>")
+      out += (delstart + ''.join(l[0][e[1]:e[2]]) + delend + insstart + ''.join(l[1][e[3]:e[4]]) + insend)
     elif e[0] == "delete":
-      out += ('<del class="diff">'+ ''.join(l[0][e[1]:e[2]]) + "</del>")
+      out += (delstart + ''.join(l[0][e[1]:e[2]]) + delend)
     elif e[0] == "insert":
-      out += ('<ins class="diff">'+''.join(l[1][e[3]:e[4]]) + "</ins>")
+      out += (insstart + ''.join(l[1][e[3]:e[4]]) + insend)
     elif e[0] == "equal":
       out += (''.join(l[1][e[3]:e[4]]))
 
