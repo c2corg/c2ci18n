@@ -361,3 +361,7 @@ a.msgid {
 .diff_wrapper del {
   background-color: #ffb3b3;
 }
+
+#msgid_autocomplete {
+  width: 90%;
+}
